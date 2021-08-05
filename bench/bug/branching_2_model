@@ -1,0 +1,20 @@
+# https://probprog.github.io/anglican/examples/viewer/?worksheet=aistats/branching-aistats
+
+external fib: nat -> nat
+
+type Latent
+type Observation
+
+proc Model() -> nat | lat : Latent | obs : Observation = {
+  r <- observe{lat}(POIS(4.));
+  _ <- { if{lat} true then return () else return () };
+  l <- {
+    if{lat} 4 < r then
+      return 6
+    else
+      t <- observe{lat}(POIS(4.));
+      return (t + fib(3 * r))
+  };
+  y <- sample{obs}(POIS(l));
+  return r
+}

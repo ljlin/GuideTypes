@@ -1,0 +1,11 @@
+type Latent
+
+proc Proposal() -> unit | . | lat : Latent = {
+  _ <- sample{lat}(GEO(0.5));
+  _ <- { if{lat} . then return () else return () };
+  if{lat} . then
+    return ()
+  else
+    _ <- sample{lat}(GEO(0.5));
+    return ()
+}
